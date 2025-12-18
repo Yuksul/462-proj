@@ -171,8 +171,8 @@ def pull_order_to_array_rgb(orders, canvas, nails, colors, strength):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create String Art')
-    parser.add_argument('-i', action="store", dest="input_file", default="test-image.jpeg")
-    parser.add_argument('-o', action="store", dest="output_file", default="input/output.png")
+    parser.add_argument('input_file', help='Path to input image file')
+    parser.add_argument('output_file', nargs='?', default='output/result.png',help='Path to output image file (optional)')    
     parser.add_argument('-d', action="store", type=int, dest="side_len", default=300)
     parser.add_argument('-s', action="store", type=float, dest="export_strength", default=0.1)
     parser.add_argument('-l', action="store", type=int, dest="pull_amount", default=None)
