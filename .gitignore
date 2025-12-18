@@ -9,11 +9,6 @@ __pycache__/
 *.pyo
 *.pyd
 
-#image files
-src/
-input/
-output/
-
 # IDE / editor files
 .vscode/
 .idea/

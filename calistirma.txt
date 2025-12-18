@@ -1,2 +1,0 @@
-cd src  
-python src\greedyAlg.py src/input/test-image.jpeg
