@@ -10,7 +10,6 @@ __pycache__/
 *.pyd
 
 #image files
-src/
 input/
 output/
 
