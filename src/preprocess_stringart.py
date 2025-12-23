@@ -33,24 +33,34 @@ class StringArtPreprocess:
         # 1. Griye Çevir
         g = cv2.cvtColor(sq, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255.0
         
-        # 2. Kontrastı ARTIR (Şapkayı simsiyah yapmalıyız)
-        # Siyah seviyesini (Black point) yukarı çekiyoruz
-        g = np.clip((g - 0.15) * 1.2, 0, 1) 
+        # 2. Global kontrast: siyah noktasını yukarı çek
+        g = np.clip((g - 0.15) * 1.2, 0, 1)
         
         # 3. CLAHE (Yerel kontrast)
         g8 = (g * 255).astype(np.uint8)
         clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
         target = clahe.apply(g8).astype(np.float32) / 255.0
+
+        # 3.5 Arka plan bastırma: düşük frekanslı bileşeni geri it
+        bg = cv2.GaussianBlur(target, (31, 31), 0)
+        target = np.clip(target - 0.6 * (bg - target.mean()), 0, 1)
         
         # 4. KOYULAŞTIRMA (Gamma > 1)
         # Hedef görüntüyü biraz karanlık yapıyoruz ki ipler seyrek olsun, detaylar belli olsun.
-        target = np.power(target, 1.3) 
+        target = np.power(target, 1.25)
         
-        # 5. Maskeleme
+        # 5. Kenar vurgusu: kenar haritasını hedefle harmanla
+        edges = cv2.Canny((target * 255).astype(np.uint8), 40, 120).astype(np.float32) / 255.0
+        target = np.clip(0.9 * target + 0.1 * edges, 0.0, 1.0)
+        
+        # 6. Hafif yumuşatma: ceza haritasında keskin geçişleri azalt
+        target = cv2.GaussianBlur(target, (3, 3), 0)
+        
+        # 7. Maskeleme
         h, w = target.shape
         y, x = np.ogrid[:h, :w]
         center = (h//2, w//2)
-        radius = min(h, w) // 2 - 2
+        radius = min(h, w) // 2 - 6
         mask = (x - center[1])**2 + (y - center[0])**2 <= radius**2
         target[~mask] = 0
         
