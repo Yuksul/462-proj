@@ -1,2 +1,3 @@
 cd src  
 python src\greedyAlg.py src/input/test-image.jpeg
+python C:\Users\uksul\462proj\src\greedyForTest.py src/input/test-image.jpeg
