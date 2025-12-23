@@ -1,20 +1,10 @@
-cd src  
-python src\greedyAlg.py src/input/test-image.jpeg
-python greedyForTest.py input/test-image.jpeg
-
-# CMD için (caret ^ kullanıyor):
-python greedyForTest.py input/test-image.jpeg output/result.png --wb ^
-  -d 600 -l 15000 -s 0.015 ^
-  --target_nails 200 --taboo 200 --mindist 8 --noimprove 800 ^
-  --edge_weight 0.55 --blur 1.0 --canny_sigma 1.2 --canny_low 0.08 --canny_high 0.22 ^
-  --smart_start
-
-# PowerShell için (backtick ` kullanıyor):
+# PowerShell için (backtick kullanıyor):
+cd src
 python greedyForTest.py input/test-image.jpeg output/result.png --wb `
   -d 600 -l 15000 -s 0.015 `
   --target_nails 200 --taboo 200 --mindist 8 --noimprove 800 `
   --edge_weight 0.55 --blur 1.0 --canny_sigma 1.2 --canny_low 0.08 --canny_high 0.22 `
   --smart_start
 
-# Tek satırda (her shell için çalışır):
+# VEYA tek satırda:
 python greedyForTest.py input/test-image.jpeg output/result.png --wb -d 600 -l 15000 -s 0.015 --target_nails 200 --taboo 200 --mindist 8 --noimprove 800 --edge_weight 0.55 --blur 1.0 --canny_sigma 1.2 --canny_low 0.08 --canny_high 0.22 --smart_start
